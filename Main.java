@@ -4,9 +4,21 @@ public class Main {
 
         Bank account = new Bank(1000);
 
-        // TODO : create and use a TransactionListener interface with onComplete method
-        Transactions.withdraw(account, 100);
+        Transactions.withdraw(account, 100, new TransactionListener() {
+            @Override
+            public void onComplete() {
+                System.out.printf("Your balance is: %d%n", account.getTotal());
+            }
 
-        System.out.printf("Your balance is: %d%n", account.getTotal());
+            @Override
+            public void onError() {
+                System.out.println("Error occurred during the transaction.");
+            }
+
+            @Override
+            public void onLoading() {
+                System.out.println("Transaction is in progress...");
+            }
+        });
     }
 }
